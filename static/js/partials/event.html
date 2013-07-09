@@ -37,7 +37,7 @@
           <li class="nav-header">Payer</li>
           <li ng-repeat="participant in event.participants">
             <label class="radio inline">
-              <input type="radio" name="participants" ng-model="newPayment.payer" value="{{ participant._id.$oid }}" required>
+              <input type="radio" name="participants" ng-model="newPayment.payer" value="{{ participant.id }}" required>
               {{ participant.name }}
             </label>
           </li>
@@ -48,7 +48,7 @@
           <li class="nav-header">Participants</li>
           <li ng-repeat="participant in event.participants">
             <label class="checkbox inline">
-              <input type="checkbox" ng-model="participants[participant._id.$oid]"
+              <input type="checkbox" ng-model="participants[participant.id]"
                      value="{{ participant._id.$oid }}"> {{ participant.name }}
             </label>
           </li>

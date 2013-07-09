@@ -11,9 +11,7 @@ angular.module('expenseShareServices', ['ngResource'])
   .factory('Event', function ($resource, $rootScope) {
     return $resource($rootScope.config.basePath + '/event/:eventId', {}, {
       query: {method: 'GET', cache: true, params: {}, isArray: true},
-      get: {method: 'GET', cache: true, params: {eventId:''}, isArray: false}
+      get: {method: 'GET', cache: true, params: {eventId:''}, isArray: false},
+      patch: {method: 'PATCH', params: {eventId:''}}
     });
-  })
-  .factory('Payment', function ($resource, $rootScope) {
-    return $resource($rootScope.config.basePath + '/payment');
   });

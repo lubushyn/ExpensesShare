@@ -12,14 +12,13 @@ function EventsCtrl($scope, Event) {
   $scope.events = Event.query();
 }
 
-function EventCtrl($scope, $routeParams, Event, Payment) {
+function EventCtrl($scope, $routeParams, Event) {
   $scope.event = Event.get({eventId: $routeParams.eventId});
 
   $scope.participants = {};
   $scope.newPayment = {
     participants: [],
     payer: null,
-    event_id: null,
     total: null
   };
 
@@ -34,26 +33,29 @@ function EventCtrl($scope, $routeParams, Event, Payment) {
       }
     }
 
-    //set event id
-    $scope.newPayment.event_id = $scope.event._id.$oid;
 
     if (!$scope.newPayment.participants.length) {
       alert('Select participants!!');
       return;
     }
 
-    var payment = new Payment($scope.newPayment);
-    //TODO replace alerts
-    payment.$save(function () {
-      alert('Success');
-    }, function (data) {
-      alert('Error occured: ' + data.status);
-    });
+    console.log($scope.newPayment);
 
-    //flush total
-    $scope.newPayment.total = '';
-    //TODO rewrite
-    $scope.event = Event.get({eventId: $routeParams.eventId});
+
+    //TODO replace alerts
+    Event.patch({eventId: $routeParams.eventId},
+      $scope.newPayment,
+      function () {
+        alert('Success');
+        //flush total
+        $scope.newPayment.total = '';
+        //TODO rewrite
+        $scope.event = Event.get({eventId: $routeParams.eventId});
+      }, function (data) {
+        alert('Error occured: ' + data.status);
+      });
+
+
   };
 
 }
