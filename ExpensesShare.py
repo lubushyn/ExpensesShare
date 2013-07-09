@@ -5,6 +5,8 @@ from flask import request
 from flask import send_from_directory
 from pymongo import MongoClient
 from bson import json_util, ObjectId
+
+from ShareCalculator import ShareCalculator
 import config
 import json
 
@@ -45,6 +47,9 @@ def get_event(event_id):
     people = db.users.find({"_id": {"$in": participants}})
     result['participants'] = [dict(id=str(user['_id']), name=user['name'])
                               for user in people]
+
+    calculator = ShareCalculator(participants, event['payments'])
+    event["report"] = calculator.Run()
     return json.dumps(result, default=json_util.default)
 
 
