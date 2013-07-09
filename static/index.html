@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Expenses Share</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link href="js/vendors/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="js/vendors/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="css/app.css" rel="stylesheet">
+  <!--Vendor libs-->
+  <script src="js/vendors/jquery/jquery.js"></script>
+  <script src="js/vendors/bootstrap/js/bootstrap.js"></script>
+  <script src="js/vendors/angular/angular.js"></script>
+  <script src="js/vendors/angular-resource/angular-resource.js"></script>
+
+  <!--FrontEnd Logic-->
+  <script src="js/controllers.js"></script>
+  <!--<script src="js/filters.js"></script>-->
+  <script src="js/services.js"></script>
+  <!--<script src="../static/directives.js"></script>-->
+  <script src="js/app.js"></script>
+
+
+</head>
+<body ng-app="expenseShare">
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <a class="brand" href="#">{{ config.projectName }}</a>
+
+      <ul class="nav">
+        <li><a href="#/events">Events</a></li>
+        <li><a href="#/upchk">Link</a></li>
+      </ul>
+
+      <form class="navbar-form pull-right">
+          <input type="text" class="search-query" placeholder="Search events">
+      </form>
+    </div>
+  </div>
+</div>
+
+<div ng-view></div>
+
+</body>
+</html>
