@@ -1,8 +1,6 @@
 __author__ = 'aliubushyn'
 
 
-
-
 class ShareCalculator:
     def __init__(self, participants, payments):
         self.participants_count = len(participants)
@@ -13,11 +11,15 @@ class ShareCalculator:
 
 
     def analize_participant(self, participant):
-        report = {"name":participant["name"],"result":{"total_debit": 50, "total_credit": 100,
-                  "debit":[{"name": "Alexander Liubushyn", "_id": "14328735", "total":10},
-                           {"name": "Artem Gornostal", "_id": "148735", "total":40}],
-                  "credit": [{"name": "Alexander Ivanov", "_id": "14328735", "total":10},
-                           {"name": "Artem Azarov", "_id": "148735", "total":40}]}}
+        report = {"name": participant["name"], "result": {"total_debit": 50, "total_credit": 100,
+                                                          "debit": [{"name": "Alexander Liubushyn", "_id": "14328735",
+                                                                     "total": 10},
+                                                                    {"name": "Artem Gornostal", "_id": "148735",
+                                                                     "total": 40}],
+                                                          "credit": [{"name": "Alexander Ivanov", "_id": "14328735",
+                                                                      "total": 10},
+                                                                     {"name": "Artem Azarov", "_id": "148735",
+                                                                      "total": 40}]}}
         return report
 
     def analize_calculation_matrix(self):
