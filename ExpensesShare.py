@@ -13,7 +13,6 @@ client = MongoClient(config.connection_string)
 db = client.expensesshare
 
 
-
 def convert_to_json(dbObject):
     json_presentation = []
     for doc in dbObject:
@@ -60,18 +59,26 @@ def event_get(event_id):
         participants = deepcopy(p['participants'])
         del p['participants'][:]
         for id in participants:
-            user  = db.users.find_one({"_id": ObjectId(id)})
+            user = db.users.find_one({"_id": ObjectId(id)})
             p['participants'].append(user)
         p['payer'] = db.users.find_one({"_id": ObjectId(p['payer'])})
-    #Extend payer Id to user object
+        #Extend payer Id to user object
     return json.dumps(event, default=json_util.default)
 
-@app.route('/payment',methods=['POST'])
+
+@app.route('/payment', methods=['POST'])
 def create_payment():
     payments = db.payments
     payment = json.loads(request.data)
+    # calculation part
+    payment['calculation'] = []
+    participants_count = len(payment['participants'])
+    share = payment['total'] / participants_count
+    for participant in payment['participants']:
+        payment['calculation'].append({"participant": participant, "share":share})
     payments.insert(payment)
     return "Created", 200
+
 
 if __name__ == '__main__':
     app.run(host=config.ip_address, debug=True)
