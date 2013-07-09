@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import send_from_directory
 from pymongo import MongoClient
 from bson import json_util, ObjectId
 from copy import deepcopy
@@ -18,11 +21,6 @@ def convert_to_json(dbObject):
     for doc in dbObject:
         json_presentation.append(doc)
     return json.dumps(json_presentation, default=json_util.default)
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 
 @app.route('/user')
@@ -75,10 +73,22 @@ def create_payment():
     participants_count = len(payment['participants'])
     share = payment['total'] / participants_count
     for participant in payment['participants']:
-        payment['calculation'].append({"participant": participant, "share":share})
+        payment['calculation'].append({"participant": participant, "share": share})
     payments.insert(payment)
     return "Created", 200
 
+
+@app.route('/')
+def root():
+    return app.send_static_file('index.html')
+
+
+@app.route('/<path:fullpath>')
+def static_router(fullpath):
+    if not fullpath.endswith('.py'):
+        return send_from_directory('static', fullpath)
+    else:
+        return 'thank you!'
 
 if __name__ == '__main__':
     app.run(host=config.ip_address, debug=True)
