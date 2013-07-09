@@ -71,7 +71,7 @@ def create_payment():
     # calculation part
     payment['calculation'] = []
     participants_count = len(payment['participants'])
-    share = payment['total'] / participants_count
+    share = payment['total'] // participants_count
     for participant in payment['participants']:
         payment['calculation'].append({"participant": participant, "share": share})
     payments.insert(payment)
