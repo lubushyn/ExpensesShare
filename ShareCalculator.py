@@ -9,8 +9,7 @@ class ShareCalculator:
         self.participants = participants
         self.payments = payments
         #Create empty calculation matrix
-        self.calculation_matrix = [[0 for x in xrange(self.participants_count)]
-                                   for x in xrange(self.participants_count)]
+        self.calculation_matrix = [[0] * self.participants_count] * 2
 
 
     def analize_participant(self, participant):
