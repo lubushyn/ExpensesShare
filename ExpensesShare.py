@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-
+from copy import deepcopy
 from flask import Flask
 from flask import request
-from flask import render_template
 from flask import send_from_directory
 from pymongo import MongoClient
 from bson import json_util, ObjectId
-from copy import deepcopy
-import config
 import json
+import config
+from ShareCalculator import ShareCalculator
+
 
 app = Flask(__name__)
 
@@ -54,13 +54,14 @@ def event_get(event_id):
     for payment in payments:
         event['payments'].append(payment)
     for p in event["payments"]:
-        participants = deepcopy(p['participants'])
+        payment_participants = deepcopy(p['participants'])
         del p['participants'][:]
-        for id in participants:
+        for id in payment_participants:
             user = db.users.find_one({"_id": ObjectId(id)})
             p['participants'].append(user)
         p['payer'] = db.users.find_one({"_id": ObjectId(p['payer'])})
-        #Extend payer Id to user object
+    calculator = ShareCalculator(participants,event['payments'])
+    event["Report"] = calculator.Run()
     return json.dumps(event, default=json_util.default)
 
 
