@@ -3,7 +3,7 @@
     <div class="span12">
       <ul class="nav nav-tabs nav-stacked">
         <li ng-repeat="event in events">
-          <a href="#/event/{{ event._id.$oid }}">{{ event.name }} (peoples: {{ event.participants.length }})</a>
+          <a href="#/event/{{ event._id.$oid }}">{{ event.name }} (participants: {{ event.participants.length }})</a>
         </li>
       </ul>
     </div>
