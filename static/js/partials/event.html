@@ -1,0 +1,60 @@
+<div class="container-fluid">
+<form class="form-inline" ng-submit="pay()">
+  <div class="row-fluid">
+    <div class="span2">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">Payments</li>
+          <li ng-repeat="payment in event.payments">
+            <a href="">{{ payment.total }}$ (participants: {{ payment.participants.length }})</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="span7">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span8">
+              <div class="input-append">
+                <input class="input-medium" id="appendedInput" type="number" ng-model="newPayment.total" required>
+                <span class="add-on">$</span>
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="hero-unit">
+        <h1>Event: {{ event.name }}</h1>
+        <p>{{ event.report }}</p>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">Payer</li>
+          <li ng-repeat="participant in event.participants">
+            <label class="radio inline">
+              <input type="radio" name="participants" ng-model="newPayment.payer" value="{{ participant._id.$oid }}" required>
+              {{ participant.name }}
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">Participants</li>
+          <li ng-repeat="participant in event.participants">
+            <label class="checkbox inline">
+              <input type="checkbox" ng-model="participants[participant._id.$oid]"
+                     value="{{ participant._id.$oid }}"> {{ participant.name }}
+            </label>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
