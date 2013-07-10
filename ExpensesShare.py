@@ -12,7 +12,7 @@ import json
 
 app = Flask(__name__)
 
-client = MongoClient(config.connection_string)
+client = MongoClient(config.MONGODB_URL)
 db = client.expensesshare
 
 
@@ -83,4 +83,4 @@ def static_router(fullpath):
         return 'thank you!'
 
 if __name__ == '__main__':
-    app.run(host=config.ip_address, debug=True)
+    app.run(host=config.IP_ADDRESS, debug=True)
