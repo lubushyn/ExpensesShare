@@ -34,9 +34,11 @@ class ShareCalculator:
                 credit += calced
             i += 1
 
-        report = {"participant": str(participant), "result": {"total_debit": debit, "total_credit": abs(credit),
-                                                              "debit": debit_calculation,
-                                                              "credit": credit_calculation}}
+        report = {"participant": {"name": str(participant['name']),
+                                  "id": str(participant['id'])},
+                  "result": {"total_debit": debit, "total_credit": abs(credit),
+                             "debit": debit_calculation,
+                             "credit": credit_calculation}}
         return report
 
     def analize_calculation_matrix(self):
