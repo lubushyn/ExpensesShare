@@ -7,19 +7,35 @@ class ShareCalculator:
         self.participants = participants
         self.payments = payments
         #Create empty calculation matrix
-        self.calculation_matrix = [[0] * self.participants_count] * 2
+        self.calculation_matrix = [[0 for x in xrange(self.participants_count)] for x in xrange(self.participants_count)]
 
 
     def analize_participant(self, participant):
-        report = {"name": str(participant), "result": {"total_debit": 50, "total_credit": 100,
-                                                          "debit": [{"name": "Alexander Liubushyn", "_id": "14328735",
-                                                                     "total": 10},
-                                                                    {"name": "Artem Gornostal", "_id": "148735",
-                                                                     "total": 40}],
-                                                          "credit": [{"name": "Alexander Ivanov", "_id": "14328735",
-                                                                      "total": 10},
-                                                                     {"name": "Artem Azarov", "_id": "148735",
-                                                                      "total": 40}]}}
+        debit_calculation = []
+        credit_calculation = []
+        debit = 0
+        credit = 0
+        i = 0
+        who = self.get_participant_id(participant['id'])
+        calced = 0
+        for m in self.calculation_matrix[who]:
+            if m > 0:
+                calced = m - self.calculation_matrix[i][who]
+                if calced > 0:
+                    debit_calculation.append({"name": self.participants[i]['name'],
+                                              "id": self.participants[i]['id'],
+                                              "total": str(calced)})
+                    debit += calced
+                if calced < 0:
+                    credit_calculation.append({"name": self.participants[i]['name'],
+                                              "id": self.participants[i]['id'],
+                                              "total": str(calced)})
+                    credit +=calced
+                i += 1
+
+        report = {"participant": str(participant), "result": {"total_debit": debit, "total_credit": credit,
+                                                       "debit": debit_calculation,
+                                                       "credit": credit_calculation}}
         return report
 
     def analize_calculation_matrix(self):
@@ -29,12 +45,12 @@ class ShareCalculator:
         return report
 
     def add_dept(self, who, whom, how):
-        self.calculation_matrix[who][whom] += how
+        self.calculation_matrix[who][whom] =self.calculation_matrix[who][whom] + how
 
     def get_participant_id(self, participant_id):
         index = 0
         for p in self.participants:
-            if str(p) == str(participant_id):
+            if str(p['id']) == str(participant_id):
                 return index
             index += 1
 

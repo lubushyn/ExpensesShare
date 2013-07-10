@@ -48,7 +48,7 @@ def get_event(event_id):
     result['participants'] = [dict(id=str(user['_id']), name=user['name'])
                               for user in people]
 
-    calculator = ShareCalculator(participants, event['payments'])
+    calculator = ShareCalculator(result['participants'], event['payments'])
     result["report"] = calculator.Run()
     return json.dumps(result, default=json_util.default)
 
