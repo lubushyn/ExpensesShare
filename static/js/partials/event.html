@@ -49,13 +49,19 @@
           <div class="accordion" id="reports">
             <div class="accordion-group" ng-repeat="report in event.report">
               <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#reports"
-                   href="#{{ report.participant.id }}">
-                  {{ report.participant.name }}
-                  <span class="label label-important">owe you: {{ report.result.total_credit }}$</span>
-                  <span class="label label-success">your debt: {{ report.result.total_debit }}$</span>
-                </a>
-
+                <div class="row-fluid">
+                  <div class="span2 fix30">
+                    <span class="label label-important">your debt: {{ report.result.total_debit }}$</span>
+                    <br>
+                    <span class="label label-success">owe you: {{ report.result.total_credit }}$</span>
+                  </div>
+                  <div class="span4 fix70">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#reports"
+                       href="#{{ report.participant.id }}">
+                      {{ report.participant.name }}
+                    </a>
+                  </div>
+                </div>
               </div>
               <div id="{{ report.participant.id }}" class="accordion-body collapse">
                 <div class="accordion-inner">

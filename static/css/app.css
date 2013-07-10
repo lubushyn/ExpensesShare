@@ -13,4 +13,19 @@ body {
         padding-left: 5px;
         padding-right: 5px;
     }
+
+    .fix30{
+        width: 30%!important;
+        float: left!important;
+    }
+
+    .fix50{
+        width: 50%!important;
+        float: left!important;
+    }
+
+    .fix70{
+        width: 70%!important;
+        float: left!important;
+    }
 }
