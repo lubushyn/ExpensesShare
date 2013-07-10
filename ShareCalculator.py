@@ -20,23 +20,23 @@ class ShareCalculator:
         who = self.get_participant_id(participant['id'])
         calced = 0
         for m in self.calculation_matrix[who]:
-#            if m > 0:
-                calced = m - self.calculation_matrix[i][who]
-                if calced > 0:
-                    debit_calculation.append({"name": self.participants[i]['name'],
-                                              "id": self.participants[i]['id'],
-                                              "total": str(calced)})
-                    debit += calced
-                if calced < 0:
-                    credit_calculation.append({"name": self.participants[i]['name'],
-                                              "id": self.participants[i]['id'],
-                                              "total": str(abs(calced))})
-                    credit +=calced
-                i += 1
+        #            if m > 0:
+            calced = m - self.calculation_matrix[i][who]
+            if calced > 0:
+                debit_calculation.append({"name": self.participants[i]['name'],
+                                          "id": self.participants[i]['id'],
+                                          "total": str(calced)})
+                debit += calced
+            if calced < 0:
+                credit_calculation.append({"name": self.participants[i]['name'],
+                                           "id": self.participants[i]['id'],
+                                           "total": str(abs(calced))})
+                credit += calced
+            i += 1
 
         report = {"participant": str(participant), "result": {"total_debit": debit, "total_credit": abs(credit),
-                                                       "debit": debit_calculation,
-                                                       "credit": credit_calculation}}
+                                                              "debit": debit_calculation,
+                                                              "credit": credit_calculation}}
         return report
 
     def analize_calculation_matrix(self):
@@ -46,7 +46,7 @@ class ShareCalculator:
         return report
 
     def add_dept(self, who, whom, how):
-        self.calculation_matrix[who][whom] =self.calculation_matrix[who][whom] + how
+        self.calculation_matrix[who][whom] = self.calculation_matrix[who][whom] + how
 
     def get_participant_id(self, participant_id):
         index = 0
