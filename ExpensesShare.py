@@ -49,7 +49,7 @@ def get_event(event_id):
                               for user in people]
 
     calculator = ShareCalculator(participants, event['payments'])
-    event["report"] = calculator.Run()
+    result["report"] = calculator.Run()
     return json.dumps(result, default=json_util.default)
 
 
@@ -62,7 +62,7 @@ def create_payment(event_id):
     # TODO: validate
     # {payer: "id", participants: [...], total: 123}
     payment = json.loads(request.data)
-    payment['calculation'] = [dict(participant=str(user['_id']), share=payment['total']//len(payment['participants']))
+    payment['calculation'] = [dict(participant=user, share=payment['total']//len(payment['participants']))
                for user in payment['participants']]
     db.events.update({"_id": ObjectId(event_id)},
                      {"$push": {"payments": payment}})
