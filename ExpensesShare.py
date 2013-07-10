@@ -13,7 +13,7 @@ import json
 app = Flask(__name__)
 
 client = MongoClient(config.MONGODB_URL)
-db = client.expensesshare
+db = client[config.DB_NAME]
 
 
 def jsonify(dbObject):
