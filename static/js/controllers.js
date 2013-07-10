@@ -49,6 +49,8 @@ function EventCtrl($scope, $routeParams, Event) {
         alert('Success');
         //flush total
         $scope.newPayment.total = '';
+        $scope.newPayment.name = '';
+
         //TODO rewrite
         $scope.event = Event.get({eventId: $routeParams.eventId});
       }, function (data) {
