@@ -62,6 +62,8 @@ def create_payment(event_id):
     # TODO: validate
     # {payer: "id", participants: [...], total: 123}
     payment = json.loads(request.data)
+    payment['calculation'] = [dict(participant=str(user['_id']), share=payment['total']//len(payment['participants']))
+               for user in payment['participants']]
     db.events.update({"_id": ObjectId(event_id)},
                      {"$push": {"payments": payment}})
 

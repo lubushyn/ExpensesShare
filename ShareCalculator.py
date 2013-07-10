@@ -11,7 +11,7 @@ class ShareCalculator:
 
 
     def analize_participant(self, participant):
-        report = {"name": participant["name"], "result": {"total_debit": 50, "total_credit": 100,
+        report = {"name": str(participant), "result": {"total_debit": 50, "total_credit": 100,
                                                           "debit": [{"name": "Alexander Liubushyn", "_id": "14328735",
                                                                      "total": 10},
                                                                     {"name": "Artem Gornostal", "_id": "148735",
@@ -34,7 +34,7 @@ class ShareCalculator:
     def get_participant_id(self, participant_id):
         index = 0
         for p in self.participants:
-            if str(p["_id"]) == str(participant_id):
+            if str(p) == str(participant_id):
                 return index
             index += 1
 
@@ -44,8 +44,8 @@ class ShareCalculator:
             calculation = payment['calculation']
             whom = payment['payer']
             for p in payment['participants']:
-                id = self.get_participant_id(p["_id"])
-                whom_id = self.get_participant_id(whom["_id"])
+                id = self.get_participant_id(p)
+                whom_id = self.get_participant_id(whom)
                 self.add_dept(id, whom_id, calculation[id]["share"])
         report = self.analize_calculation_matrix()
         return report
