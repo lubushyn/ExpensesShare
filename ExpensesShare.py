@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import datetime
 from flask import Flask
 from flask import request
 from flask import send_from_directory
@@ -62,6 +62,7 @@ def create_payment(event_id):
     # TODO: validate
     # {payer: "id", participants: [...], total: 123}
     payment = json.loads(request.data)
+    payment["date"] = datetime.datetime.utcnow()
     share = round(float(payment['total']) / float(len(payment['participants'])),2)
     payment['calculation'] = [dict(participant=user, share=share)
                               for user in payment['participants']]
