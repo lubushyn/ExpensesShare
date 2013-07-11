@@ -36,7 +36,7 @@ class ShareCalculator:
 
         report = {"participant": {"name": str(participant['name']),
                                   "id": str(participant['id'])},
-                  "result": {"total_debit": debit, "total_credit": abs(credit),
+                  "result": {"total_debit": round(debit,2), "total_credit": abs(round(credit,2)),
                              "debit": debit_calculation,
                              "credit": credit_calculation}}
         return report
