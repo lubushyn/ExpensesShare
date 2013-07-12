@@ -8,10 +8,15 @@
                  ng-model="newPayment.name">
 
           <div class="input-append">
-            <input class="input-medium" type="number" placeholder="total"
+            <input class="input-medium" type="text" placeholder="total"
                    ng-model="newPayment.total" required>
             <span class="add-on">$</span>
           </div>
+
+          <!--we should use parent to fix scope visibility in directive-->
+          <input class="input-medium"  type="text" placeholder="Date" ng-model="$parent.newPayment.date"
+                  datepicker="{{ config.dateFormat }}" required>
+
           <div class="row-fluid">
             <button type="submit" class="btn btn-success">Submit</button>
           </div>
@@ -51,9 +56,9 @@
               <div class="accordion-heading">
                 <div class="row-fluid">
                   <div class="span2 fix30">
-                    <span class="label label-important">your debt: {{ report.result.total_debit }}$</span>
+                    <span class="label label-important">-{{ report.result.total_debit }}$</span>
                     <br>
-                    <span class="label label-success">owe you: {{ report.result.total_credit }}$</span>
+                    <span class="label label-success">+{{ report.result.total_credit }}$</span>
                   </div>
                   <div class="span4 fix70">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#reports"
@@ -80,7 +85,7 @@
                     </tr>
                     </tbody>
                   </table>
-                  <hr>
+                  <hr ng-show="report.result.credit.length">
                   <table class="table table-hover table-bordered" ng-show="report.result.debit.length">
                     <caption>Debits</caption>
                     <thead>
@@ -100,16 +105,22 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
       <div class="span3">
         <div class="well sidebar-nav">
-          <ul class="nav nav-list">
+          <ul class="nav nav-list" id="participants-list">
             <li class="nav-header">Payments</li>
             <li ng-repeat="payment in event.payments">
-              <a href="">{{ payment.total }}$ (participants: {{ payment.participants.length }})</a>
+              <a href=""  data-title="{{ payment.name }}" data-toggle="popover" data-content="payer/participants info"
+                 data-placement="right">
+                <span class="text-success">{{ payment.date.$date|date:config.dateFormatAngular }}</span>
+                <span class="badge badge-success">{{ payment.total }}$</span>
+                <!--/-->
+                <!--<span class="badge badge-success">{{ payment.participants.length }}</span>-->
+                <i class="icon-user" ng-repeat="participant in payment.participants"></i>
+              </a>
             </li>
           </ul>
         </div>

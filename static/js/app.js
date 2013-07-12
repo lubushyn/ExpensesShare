@@ -8,7 +8,7 @@
 /* global EventsCtrl:true, EventCtrl:true */
 /* App Module */
 
-angular.module('expenseShare', ['expenseShareServices'])
+angular.module('expenseShare', ['expenseShareServices', 'expenseShareDirectives'])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
       when('/events', {templateUrl: '../static/js/partials/events.html', controller: EventsCtrl}).
@@ -21,6 +21,8 @@ angular.module('expenseShare', ['expenseShareServices'])
     $rootScope.config =
     {
       'projectName': 'Expenses Share',
-      'basePath': ''
+      'basePath': '',
+      'dateFormat': 'dd-mm-yyyy',
+      'dateFormatAngular': 'dd-MM-yyyy'
     };
   });

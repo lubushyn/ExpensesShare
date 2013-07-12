@@ -13,14 +13,19 @@ function EventsCtrl($scope, Event) {
 }
 
 function EventCtrl($scope, $routeParams, Event) {
+
+  var _defaultPayment = {
+    participants: [],
+    payer: null,
+    total: null,
+    date: null
+  };
+
+
   $scope.event = Event.get({eventId: $routeParams.eventId});
 
   $scope.participants = {};
-  $scope.newPayment = {
-    participants: [],
-    payer: null,
-    total: null
-  };
+  $scope.newPayment = $.extend({}, {}, _defaultPayment);
 
   $scope.pay = function () {
     //TODO fix this shit
@@ -33,6 +38,8 @@ function EventCtrl($scope, $routeParams, Event) {
       }
     }
 
+    //total should be float
+    $scope.newPayment.total = parseFloat($scope.newPayment.total);
 
     if (!$scope.newPayment.participants.length) {
       alert('Select participants!!');
@@ -41,23 +48,39 @@ function EventCtrl($scope, $routeParams, Event) {
 
     console.log($scope.newPayment);
 
-
     //TODO replace alerts
     Event.patch({eventId: $routeParams.eventId},
       $scope.newPayment,
       function () {
         alert('Success');
-        //flush total
-        $scope.newPayment.total = '';
-        $scope.newPayment.name = '';
+        //flush all
+        $scope.newPayment = $.extend({}, {}, _defaultPayment);
+        $scope.participants = {};
 
         //TODO rewrite
         $scope.event = Event.get({eventId: $routeParams.eventId});
       }, function (data) {
-        alert('Error occured: ' + data.status);
+        alert('Error occurred: ' + data.status);
       });
-
-
   };
+
+  $scope.$watch('newPayment.total', function () {
+    var floatValue = parseFloat($scope.newPayment.total);
+    //TODO rewite with regex - just ignore non number or dot
+    if (($scope.newPayment.total <= 0 || isNaN(floatValue)) && $scope.newPayment.total !== '') {
+      $scope.newPayment.total = '';
+    }
+  });
+
+  //move to directive
+  $('#participants-list').popover({
+    selector:'a',
+    html:true,
+    trigger:'hover'
+  });
+//    .on('click', 'a', function () {
+//    $(this).popover();
+//  });
+
 
 }

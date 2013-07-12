@@ -1,0 +1,14 @@
+{
+  "name": "kb-bootstrap-datepicker",
+  "version": "12.3.2013-2",
+  "main": "js/bootstrap-datepicker.js",
+  "gitHead": "f9a410aaedfebd5cff2e0e5c69bd6d72e7b4f79e",
+  "readme": "bootstrap-datepicker\n====================\n\nTracks latest release of datepicker from http://www.eyecon.ro/bootstrap-datepicker/",
+  "readmeFilename": "README.md",
+  "_id": "kb-bootstrap-datepicker@12.3.2013-2",
+  "description": "bootstrap-datepicker ====================",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kbrs/bootstrap-datepicker.git"
+  }
+}

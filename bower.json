@@ -5,6 +5,7 @@
     "bootstrap": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
     "jquery": "~1.9.1",
     "angular": "*",
-    "angular-resource":"* "
+    "angular-resource":"*",
+    "kb-bootstrap-datepicker":"*"
   }
 }
