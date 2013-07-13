@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid ng-cloak">
   <form class="form" ng-submit="pay()">
     <div class="row-fluid">
 
@@ -55,17 +55,15 @@
             <div class="accordion-group" ng-repeat="report in event.report">
               <div class="accordion-heading">
                 <div class="row-fluid">
-                  <div class="span2 fix30">
-                    <span class="label label-important">-{{ report.result.total_debit }}$</span>
-                    <br>
-                    <span class="label label-success">+{{ report.result.total_credit }}$</span>
-                  </div>
-                  <div class="span4 fix70">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#reports"
                        href="#{{ report.participant.id }}">
+                      <div class="participants-labels">
+                        <span class="label label-important">-{{ report.result.total_debit|number:2 }}$</span>
+                        <br>
+                        <span class="label label-success">+{{ report.result.total_credit|number:2 }}$</span>
+                      </div>
                       {{ report.participant.name }}
                     </a>
-                  </div>
                 </div>
               </div>
               <div id="{{ report.participant.id }}" class="accordion-body collapse">
@@ -110,19 +108,44 @@
 
       <div class="span3">
         <div class="well sidebar-nav">
-          <ul class="nav nav-list" id="participants-list">
-            <li class="nav-header">Payments</li>
-            <li ng-repeat="payment in event.payments">
-              <a href=""  data-title="{{ payment.name }}" data-toggle="popover" data-content="payer/participants info"
-                 data-placement="right">
-                <span class="text-success">{{ payment.date.$date|date:config.dateFormatAngular }}</span>
-                <span class="badge badge-success">{{ payment.total }}$</span>
-                <!--/-->
-                <!--<span class="badge badge-success">{{ payment.participants.length }}</span>-->
-                <i class="icon-user" ng-repeat="participant in payment.participants"></i>
-              </a>
-            </li>
-          </ul>
+          <div class="accordion" id="participants-list">
+            <div class="nav-header">Payments</div>
+            <div class="accordion-group" ng-repeat="payment in event.payments">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#participants-list"
+                   href="#{{ $index }}">
+                  <span class="text-success">{{ payment.date.$date|date:config.dateFormatAngular }}</span>
+                  <span class="badge badge-success">{{ payment.total }}$</span>
+
+                  <i class="icon-user" ng-hide="payment.participants.length > 7"
+                     ng-repeat="participant in payment.participants"></i>
+                  <span ng-show="payment.participants.length > 7">
+                    <i class="icon-user"></i>x{{ payment.participants.length }}
+                  </span>
+                </a>
+              </div>
+              <div id="{{ $index }}" class="accordion-body collapse">
+                <div class="accordion-inner">
+                  <table class="table table-hover table-bordered">
+                    <tbody>
+                    <tr class="info">
+                      <td>Payer</td>
+                      <td>{{ event.getParticipantById(payment.payer).name }}</td>
+                    </tr>
+                    <tr class="warning" ng-repeat="transaction in payment.calculation">
+                      <td><i class="icon-user"></i> {{ transaction.share }}$</td>
+                      <td>{{ event.getParticipantById(transaction.participant).name }}</td>
+                    </tr>
+                    <tr class="success">
+                      <td>Total</td>
+                      <td>{{ payment.total }}$</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

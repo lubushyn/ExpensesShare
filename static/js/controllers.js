@@ -66,21 +66,10 @@ function EventCtrl($scope, $routeParams, Event) {
 
   $scope.$watch('newPayment.total', function () {
     var floatValue = parseFloat($scope.newPayment.total);
-    //TODO rewite with regex - just ignore non number or dot
+    //TODO rewrite with regex - just ignore non number or dot
     if (($scope.newPayment.total <= 0 || isNaN(floatValue)) && $scope.newPayment.total !== '') {
       $scope.newPayment.total = '';
     }
   });
-
-  //move to directive
-  $('#participants-list').popover({
-    selector:'a',
-    html:true,
-    trigger:'hover'
-  });
-//    .on('click', 'a', function () {
-//    $(this).popover();
-//  });
-
 
 }
