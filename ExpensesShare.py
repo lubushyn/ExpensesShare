@@ -16,7 +16,7 @@ from OAuthStartegyFactory import OAuthStrategyFactory
 import config
 
 app = Flask(__name__)
-app.secret_key = "wkdsfgsdfgsdfegrkqkerklqwgerjfdsdf"
+app.secret_key = config.APP_SECRET
 
 client = MongoClient(config.MONGODB_URL)
 db = client[config.DB_NAME]
