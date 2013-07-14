@@ -66,7 +66,6 @@ class ShareCalculator:
             for p in payment['participants']:
                 id = self.get_participant_id(p)
                 whom_id = self.get_participant_id(whom)
-                #if len(calculation)>id:
                 self.add_dept(id, whom_id, calculation[payment_participant_id]["share"])
                 payment_participant_id+=1
         report = self.analize_calculation_matrix()
