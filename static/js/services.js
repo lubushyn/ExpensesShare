@@ -9,7 +9,7 @@
 /* Services */
 angular.module('expenseShareServices', ['ngResource'])
   .factory('Event', function ($resource, $rootScope) {
-    var Event =  $resource($rootScope.config.basePath + '/event/:eventId', {}, {
+    var Event =  $resource($rootScope.config.basePath + 'event/:eventId', {}, {
       query: {method: 'GET', cache: true, params: {}, isArray: true},
       get: {method: 'GET', cache: true, params: {eventId:''}, isArray: false},
       patch: {method: 'PATCH', params: {eventId:''}}
