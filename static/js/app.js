@@ -14,7 +14,6 @@ angular.module('expenseShare', ['expenseShareServices', 'expenseShareDirectives'
       when('/events', {templateUrl: '../static/js/partials/events.html', controller: EventsCtrl}).
       when('/event/:eventId', {templateUrl: '../static/js/partials/event.html', controller: EventCtrl}).
       when('/upchk', {templateUrl: '../static/js/partials/upchk.html'}).
-
       otherwise({redirectTo: '/events'});
   }])
   .run(function ($rootScope) {

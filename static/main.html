@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Expenses Share</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <!--<link href="css/app.css" rel="stylesheet">-->
+  <link href="js/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+    <link href="js/vendors/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <!--Vendor libs-->
+  <script src="js/vendors/jquery/jquery.js"></script>
+  <script src="js/vendors/bootstrap/js/bootstrap.min.js"></script>
+  <script src="js/vendors/angular/angular.js"></script>
+  <script src="js/vendors/angular-resource/angular-resource.js"></script>
+
+  <!--FrontEnd Logic-->
+  <script src="js/controllers.js"></script>
+  <!--<script src="js/filters.js"></script>-->
+  <script src="js/services.js"></script>
+  <script src="js/directives.js"></script>
+  <script src="js/app.js"></script>
+
+
+</head>
+<body>
+<!-- NAVBAR
+    ================================================== -->
+    <div class="navbar-wrapper">
+      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
+      <div class="container">
+
+        <div class="navbar navbar-inverse">
+          <div class="navbar-inner">
+            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">ExpensesShare.com</a>
+            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+                <!--<li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>--!>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!-- /.navbar-inner -->
+        </div><!-- /.navbar -->
+
+      </div> <!-- /.container -->
+    </div><!-- /.navbar-wrapper -->
+
+
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="http://www.cogentma.com/cogentwp/wp-content/uploads/2013/07/Services-1900x500.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Business trip or journey.</h1>
+              <p class="lead">Do not think how someone who has. Calculated on the return. Money should not spoil the event..</p>
+              <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="http://www.markleymarine.com/wp-content/uploads/slide6.jpg" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Detailed real time statistics.</h1>
+              <p class="lead">Be always up to date. Watch your financial condition real time. Compare various events..</p>
+              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="http://natalnakarta.org/images/1903x500/biznis.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Сapabilities.</h1>
+              <p class="lead">To repay the debt in any way. Reciprocal purchases or cash. Take debts in any way.</p>
+              <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+
+
+    <div class="container">
+        <div class="offset4 span8">
+        <a class="button-facebook" href="/login?type=facebook">Login via Facebook</a>
+        <a class="button-twitter" href="/login?type=twitter">Login via Twitter</a>
+    </div>
+        </div>
+      <!-- FOOTER -->
+      <footer>
+        <p class="offset6 span6">&copy; 2013 ExpensesShare, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+
+    </div><!-- /.container -->
+  </body>
+</html>

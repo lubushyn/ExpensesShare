@@ -17,12 +17,15 @@ client = MongoClient(config.MONGODB_URL)
 db = client[config.DB_NAME]
 factory = OAuthStrategyFactory()
 twitter = factory.twitter()
-
+facebook = factory.facebook()
 
 @twitter.tokengetter
 def get_twitter_token(token=None):
     return session.get('twitter_token')
 
+@facebook.tokengetter
+def get_facebook_token(token=None):
+    return session.get('facebook_token')
 
 def jsonify(dbObject):
     json_presentation = []
@@ -79,21 +82,28 @@ def create_payment(event_id):
     return "Created", 200
 
 
-@app.route('/')
+@app.route('/app')
 def root():
     return app.send_static_file('index.html')
+
+@app.route('/')
+def main():
+    return app.send_static_file('main.html')
 
 
 @app.route('/login')
 def login():
-    return factory.twitterStrategy.login()
+    type = request.args.get('type','')
+    if type == "facebook":
+        return factory.facebookStrategy.login()
+    if type == "twitter":
+        return factory.twitterStrategy.login()
 
 
 @app.route('/oauth-authorized')
-@twitter.authorized_handler
+@facebook.authorized_handler
 def oauth_authorized(resp):
-    return factory.twitterStrategy.authorized(resp)
-
+    return factory.facebookStrategy.authorized(resp)
 
 @app.route('/<path:fullpath>')
 def static_router(fullpath):

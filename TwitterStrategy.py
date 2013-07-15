@@ -17,7 +17,7 @@ class TwitterStrategy:
                                         consumer_secret='YK8amhp3t2lTpHf32N3k8g1tukoZ4AkJaYia3cI4')
 
     def authorized(self, resp):
-        next_url = request.args.get('next') or url_for('root')
+        next_url = request.args.get('next') or url_for('app')
         if resp is None:
             flash(u'You denied the request to sign in.')
             return redirect(next_url)
