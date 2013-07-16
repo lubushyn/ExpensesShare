@@ -13,12 +13,12 @@ function EventsCtrl($scope, Event) {
 }
 
 function EventCtrl($scope, $routeParams, Event) {
-
+  var currentDate = new Date();
   var _defaultPayment = {
     participants: [],
     payer: null,
     total: null,
-    date: null
+    date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0, 0)
   };
 
 
