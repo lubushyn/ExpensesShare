@@ -4,10 +4,10 @@ from TwitterStrategy import TwitterStrategy
 from FacebookStrategy import FacebookStrategy
 
 class OAuthStrategyFactory:
-    def __init__(self):
+    def __init__(self,db):
         self.oauth = OAuth()
-        self.twitterStrategy = TwitterStrategy(self.oauth)
-        self.facebookStrategy = FacebookStrategy(self.oauth)
+        self.twitterStrategy = TwitterStrategy(self.oauth, db)
+        self.facebookStrategy = FacebookStrategy(self.oauth, db)
 
     def twitter(self):
         return self.twitterStrategy.twitter

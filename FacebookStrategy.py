@@ -7,7 +7,7 @@ from flask import redirect
 
 
 class FacebookStrategy:
-    def __init__(self, oauth):
+    def __init__(self, oauth, db):
         self.facebook = oauth.remote_app('facebook',
                                          base_url='https://graph.facebook.com/',
                                          request_token_url=None,
@@ -17,6 +17,8 @@ class FacebookStrategy:
                                          consumer_secret="532b839ed2c4c4469e6752c32ac057fe",
                                          request_token_params={'scope': 'email'}
         )
+        self.db = db
+
 
     def authorized(self, resp):
         next_url = request.args.get('next') or url_for('app')
@@ -28,10 +30,19 @@ class FacebookStrategy:
         session['expires'] = resp['expires']
         session['facebook_token'] = (resp['access_token'], '')
         me = self.facebook.get('/me')
+        user = self.db.users.find_one({"email":me.data["email"]})
+        if user is None:
+            self.db.users.insert({"username": me.data["username"],
+                                  "is_authenticated": True,
+                          "name": me.data["name"], "email": me.data["email"],
+                          "facebook": True, "facebook_access_token": resp["access_token"],
+                          "facebook_expires": resp["expires"]})
+        session['user_id'] = str(self.db.users.find_one({"email":me.data["email"]})['_id'])
         return redirect(next_url)
 
+
     def login(self):
-        url = url_for('oauth_authorized',
-                      next=request.args.get('next') or request.referrer + "app" or None)
+        url = url_for('oauth_authorized_facebook',
+                  next=request.args.get('next') or request.referrer + "app" or None)
         url = 'http://alex.com:5000' + url
         return self.facebook.authorize(callback=url)
