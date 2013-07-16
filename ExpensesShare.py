@@ -61,12 +61,14 @@ def jsonify(dbObject):
 
 
 @app.route('/user')
+@login_required
 def users():
     users = db.users.find()
     return jsonify(users)
 
 
 @app.route('/event')
+@login_required
 def events():
     events = db.events.find()
     if events is None:
@@ -75,6 +77,7 @@ def events():
 
 
 @app.route('/event/<event_id>')
+@login_required
 def get_event(event_id):
     event = db.events.find_one({"_id": ObjectId(event_id)})
     if event is None:
@@ -91,6 +94,7 @@ def get_event(event_id):
 
 
 @app.route('/event/<event_id>', methods=['PATCH'])
+@login_required
 def create_payment(event_id):
     event = db.events.find_one({"_id": ObjectId(event_id)})
     if event is None:

@@ -38,4 +38,4 @@ class TwitterStrategy:
 
     def login(self):
         return self.twitter.authorize(callback=url_for('oauth_authorized_twitter',
-        next=request.args.get('next') or request.referrer or None))
+        next=request.args.get('next') or request.referrer + "app" or None))
