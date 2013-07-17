@@ -4,7 +4,7 @@ from flask_login import UserMixin
 class User(UserMixin):
     """User Session management Class
     """
-    def __init__(self, email, id, name, accesstoken="", active=True):
+    def __init__(self, email=None, id=None, name=None, accesstoken="", active=True):
         self.email = email
         self.id = id
         self.active = active

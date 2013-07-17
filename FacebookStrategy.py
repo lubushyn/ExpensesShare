@@ -35,7 +35,7 @@ class FacebookStrategy:
             self.db.users.insert({"username": me.data["username"],
                                   "is_authenticated": True,
                           "name": me.data["name"], "email": me.data["email"],
-                          "facebook": True, "facebook_access_token": resp["access_token"],
+                          "facebook": True, "twitter": False, "facebook_access_token": resp["access_token"],
                           "facebook_expires": resp["expires"]})
         session['user_id'] = str(self.db.users.find_one({"email":me.data["email"]})['_id'])
         return redirect(next_url)

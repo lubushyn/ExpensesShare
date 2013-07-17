@@ -31,7 +31,11 @@ login_manager.login_view = 'main'
 @login_manager.user_loader
 def load_user(user_id):
     db_user =  db.users.find_one({'_id': ObjectId(user_id)})
-    return User(email=db_user['email'], id=str(db_user['_id']), name=db_user['name'])
+    if db_user is not None:
+        if db_user['facebook']:
+            return User(email=db_user['email'], id=str(db_user['_id']), name=db_user['name'])
+        if db_user['twitter']:
+            return User(name=db_user['username'])
 
 @app.before_request
 def before_request():
