@@ -32,7 +32,8 @@ class TwitterStrategy:
             self.db.users.insert({"username": resp['screen_name'],
                           "twitter": True, "facebook": False, "twitter_access_token": resp["oauth_token"],
                           "twitter_oauth_token_secret": resp["oauth_token_secret"]})
-        session['user_id'] = str(self.db.users.find_one({"username": resp['screen_name']})['_id'])
+        db_user = self.db.users.find_one({"username": resp['screen_name']})
+        session['user_id'] = str(db_user['_id'])
         flash('You were signed in as %s' % resp['screen_name'])
         return redirect(next_url)
 

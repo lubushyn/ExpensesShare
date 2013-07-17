@@ -45,14 +45,17 @@ def before_request():
 
 @twitter.tokengetter
 def get_twitter_token(token=None):
+    user = g.user
+    if user is not None:
+        return (user['twitter_access_token'], user['twitter_oauth_token_secret'])
     return session.get('twitter_token')
 
 
 @facebook.tokengetter
 def get_facebook_token(token=None):
     user = g.user
-    #if user is not None:
-    #    return user['facebook_access_token']
+    if user is not None:
+        return user['facebook_access_token']
     #user = g.user
     return session.get('facebook_token')
 

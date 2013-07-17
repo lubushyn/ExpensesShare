@@ -4,6 +4,7 @@ from flask import url_for
 from flask import session
 from flask import flash
 from flask import redirect
+from flask import g
 
 
 class FacebookStrategy:
@@ -37,7 +38,9 @@ class FacebookStrategy:
                           "name": me.data["name"], "email": me.data["email"],
                           "facebook": True, "twitter": False, "facebook_access_token": resp["access_token"],
                           "facebook_expires": resp["expires"]})
-        session['user_id'] = str(self.db.users.find_one({"email":me.data["email"]})['_id'])
+        db_user = self.db.users.find_one({"email":me.data["email"]})
+        session['user_id'] = str(db_user['_id'])
+        g.user = db_user
         return redirect(next_url)
 
 
