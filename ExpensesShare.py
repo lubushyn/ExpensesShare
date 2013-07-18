@@ -1,16 +1,17 @@
 #!/usr/bin/env python
+import json
+from bson import json_util, ObjectId
+
 from flask import Flask
 from flask import request, redirect
 from flask import send_from_directory
 from flask import session
 from flask import g
-from flask_login import LoginManager, \
-    login_required, login_user, \
-    logout_user, user_unauthorized
+
+from flask_login import LoginManager, login_required
 from pymongo import MongoClient
-from bson import json_util, ObjectId
+
 from User import User
-import json
 from ShareCalculator import ShareCalculator
 from OAuthStartegyFactory import OAuthStrategyFactory
 import config
@@ -28,26 +29,32 @@ facebook = factory.facebook()
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'main'
+
+
 @login_manager.user_loader
 def load_user(user_id):
-    db_user =  db.users.find_one({'_id': ObjectId(user_id)})
+    db_user = db.users.find_one({'_id': ObjectId(user_id)})
     if db_user is not None:
         if db_user['facebook']:
-            return User(email=db_user['email'], id=str(db_user['_id']), name=db_user['name'])
+            return User(email=db_user['email'],
+                        id=str(db_user['_id']),
+                        name=db_user['name'])
         if db_user['twitter']:
             return User(name=db_user['username'])
+
 
 @app.before_request
 def before_request():
     g.user = None
     if 'user_id' in session:
-        g.user = db.users.find_one({"_id":ObjectId(session['user_id'])})
+        g.user = db.users.find_one({"_id": ObjectId(session['user_id'])})
+
 
 @twitter.tokengetter
 def get_twitter_token(token=None):
     user = g.user
     if user is not None:
-        return (user['twitter_access_token'], user['twitter_oauth_token_secret'])
+        return user['twitter_access_token'], user['twitter_oauth_token_secret']
     return session.get('twitter_token')
 
 
@@ -110,7 +117,8 @@ def create_payment(event_id):
     # TODO: validate
     # {payer: "id", participants: [...], total: 123}
     payment = json.loads(request.data)
-    share = round(float(payment['total']) / float(len(payment['participants'])), 2)
+    share = round(float(payment['total']) /
+                  float(len(payment['participants'])), 2)
     payment['calculation'] = [dict(participant=user, share=share)
                               for user in payment['participants']]
     db.events.update({"_id": ObjectId(event_id)},
@@ -118,9 +126,11 @@ def create_payment(event_id):
 
     return "Created", 200
 
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return redirect('/')
+
 
 @app.route('/app')
 @login_required
