@@ -46,6 +46,5 @@ class FacebookStrategy:
 
     def login(self):
         url = url_for('oauth_authorized_facebook',
-                  next=request.args.get('next') or request.referrer + "app" or None)
-        url = 'http://alex.com:5000' + url
+                  next=request.args.get('next') or request.referrer + "app" or None,_external=True)
         return self.facebook.authorize(callback=url)
