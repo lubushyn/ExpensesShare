@@ -16,7 +16,6 @@ class TwitterStrategy:
                                         consumer_key='0LbXly2JdkuezCN8FrhOw',
                                         consumer_secret='YK8amhp3t2lTpHf32N3k8g1tukoZ4AkJaYia3cI4')
         self.db = db
-
     def authorized(self, resp):
         next_url = request.args.get('next') or url_for('app')
         if resp is None:

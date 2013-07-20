@@ -114,7 +114,7 @@
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#participants-list"
                    href="#{{ $index }}">
-                  <span class="text-success">{{ payment.date.$date|date:config.dateFormatAngular }}</span>
+                  <span class="text-success">{{ payment.date|date:config.dateFormatAngular }}</span>
                   <span class="badge badge-success">{{ payment.total }}$</span>
 
                   <i class="icon-user" ng-hide="payment.participants.length > 7"
@@ -127,6 +127,7 @@
               <div id="{{ $index }}" class="accordion-body collapse">
                 <div class="accordion-inner">
                   <table class="table table-hover table-bordered">
+                    <caption>{{ payment.name }}</caption>
                     <tbody>
                     <tr class="info">
                       <td>Payer</td>
