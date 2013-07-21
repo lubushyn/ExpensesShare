@@ -55,9 +55,9 @@ def get_twitter_token(token=None):
 def get_facebook_token(token=None):
     user = g.user
     if user is not None:
-        return user['facebook_access_token']
+        return user['facebook_access_token'], ''
     #user = g.user
-    return session.get('facebook_token')
+    return session.get('facebook_token'), ''
 
 
 def jsonify(dbObject):

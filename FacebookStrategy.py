@@ -29,16 +29,16 @@ class FacebookStrategy:
 
         session['access_token'] = resp['access_token']
         session['expires'] = resp['expires']
-        session['facebook_token'] = (resp['access_token'], '')
+        session['facebook_token'] = resp['access_token']
         me = self.facebook.get('/me')
-        user = self.db.users.find_one({"email":me.data["email"]})
+        user = self.db.users.find_one({"email": me.data["email"]})
         if user is None:
             self.db.users.insert({"username": me.data["username"],
                                   "is_authenticated": True,
-                          "name": me.data["name"], "email": me.data["email"],
-                          "facebook": True, "twitter": False, "facebook_access_token": resp["access_token"],
-                          "facebook_expires": resp["expires"]})
-        db_user = self.db.users.find_one({"email":me.data["email"]})
+                                  "name": me.data["name"], "email": me.data["email"],
+                                  "facebook": True, "twitter": False, "facebook_access_token": resp["access_token"],
+                                  "facebook_expires": resp["expires"]})
+        db_user = self.db.users.find_one({"email": me.data["email"]})
         session['user_id'] = str(db_user['_id'])
         g.user = db_user
         return redirect(next_url)
@@ -46,5 +46,5 @@ class FacebookStrategy:
 
     def login(self):
         url = url_for('oauth_authorized_facebook',
-                  next=request.args.get('next') or request.referrer + "app" or None,_external=True)
+                      next=request.args.get('next') or request.referrer + "app" or None, _external=True)
         return self.facebook.authorize(callback=url)
