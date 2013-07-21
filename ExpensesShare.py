@@ -141,6 +141,12 @@ def login():
     if type == "twitter":
         return factory.twitterStrategy.login()
 
+@app.route('/profile')
+def profile():
+    user_id = session.get('user_id')
+    profile = db.users.find_one({"_id": ObjectId(user_id)})
+    return json.dumps(profile,default=json_util.default)
+
 
 @app.route('/oauth-authorized-twitter')
 @twitter.authorized_handler
