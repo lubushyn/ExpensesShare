@@ -110,7 +110,7 @@
         <div class="well sidebar-nav">
           <div class="accordion" id="participants-list">
             <div class="nav-header">Payments</div>
-            <div class="accordion-group" ng-repeat="payment in event.payments">
+            <div class="accordion-group" ng-repeat="payment in event.payments| orderBy:'date':true">
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#participants-list"
                    href="#{{ $index }}">
