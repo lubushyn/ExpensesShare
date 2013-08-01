@@ -11,7 +11,7 @@ angular.module('expenseShareServices', ['ngResource'])
   .factory('Event', function ($resource, $rootScope) {
     var Event =  $resource($rootScope.config.basePath + 'event/:eventId', {}, {
       query: {method: 'GET', cache: true, params: {}, isArray: true},
-      get: {method: 'GET', cache: true, params: {eventId:''}, isArray: false},
+      get: {method: 'GET', cache: false, params: {eventId:''}, isArray: false},
       patch: {method: 'PATCH', params: {eventId:''}}
     });
 
@@ -28,4 +28,26 @@ angular.module('expenseShareServices', ['ngResource'])
     };
 
     return Event;
+  })
+  .factory('User', function ($resource, $rootScope, $http) {
+    return  $resource($rootScope.config.basePath + 'user/me', {}, {
+      me: {
+        method: 'GET',
+        cache: true,
+        params: {},
+        //we get first array item due to backend limitations. Will be fixed in future
+        transformResponse: $http.defaults.transformResponse.concat([
+          function (data) {
+            data = data[0];
+            data.id = data._id.$oid;
+
+            return data;
+          }
+        ])
+      }
+    });
   });
+
+
+
+

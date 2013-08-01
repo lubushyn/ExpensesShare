@@ -20,5 +20,12 @@ body {
     display: inline-block;
     /*float: left;*/
     margin: 0 10px;
-    vertical-align: middle;
+}
+
+#participants-list a:hover {
+	text-decoration:none;
+}
+
+#participants-list .highlighted{
+    border-color: #dff0d8;
 }

@@ -1,0 +1,52 @@
+<div class="container-fluid ng-cloak">
+  <form class="form" ng-submit="pay()">
+    <div class="row-fluid">
+
+      <div class="span12">
+        <div class="well span3 offset1">
+          <input class="input-medium" type="text" placeholder="Payment name"
+                 ng-model="newPayment.name">
+
+          <div class="input-append">
+            <input class="input-medium" type="text" placeholder="total"
+                   ng-model="newPayment.total" required>
+            <span class="add-on">$</span>
+          </div>
+
+          <!--we should use parent to fix scope visibility in directive-->
+          <input class="input-medium"  type="text" placeholder="Date" ng-model="$parent.newPayment.date"
+                  datepicker="{{ config.dateFormat }}" required>
+
+          <div class="row-fluid">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </div>
+
+        <div class="well span3">
+          <ul class="nav nav-list">
+            <li class="nav-header">Payer</li>
+            <li ng-repeat="participant in event.participants">
+              <label class="radio inline">
+                <input type="radio" name="participants" ng-model="newPayment.payer" value="{{ participant.id }}"
+                       required>
+                {{ participant.name }}
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="well span3">
+          <ul class="nav nav-list">
+            <li class="nav-header">Participants</li>
+            <li ng-repeat="participant in event.participants">
+              <label class="checkbox inline">
+                <input type="checkbox" ng-model="participants[participant.id]"
+                       value="{{ participant._id.$oid }}"> {{ participant.name }}
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -42,4 +42,11 @@ angular.module('expenseShareDirectives', [])
         });
       }
     };
+  })
+  .directive('stopClick', function () {
+    return function (scope, element) {
+      $(element).click(function (event) {
+        event.preventDefault();
+      });
+    }
   });

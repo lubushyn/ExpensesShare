@@ -66,6 +66,14 @@ def jsonify(dbObject):
         json_presentation.append(doc)
     return json.dumps(json_presentation, default=json_util.default)
 
+# TODO fix it somebody - we have to problems
+# 1. I cannot jsonify 1 object, only array @see user()
+# 2. user id and participant id is not consistant (as me - I explain)
+@app.route('/user/me') 
+@login_required
+def user():
+    # array wrap - it is hack for jsonify, shoud be rewrited
+    return jsonify([g.user])
 
 @app.route('/user')
 @login_required

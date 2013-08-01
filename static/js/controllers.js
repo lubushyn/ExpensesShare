@@ -3,7 +3,7 @@
  * Date: 7/7/13
  * Time: 8:30 PM
  */
-/* exported EventsCtrl, EventCtrl */
+/* exported EventsCtrl, PaymentCtrl, EventCtrl */
 
 'use strict';
 
@@ -12,7 +12,10 @@ function EventsCtrl($scope, Event) {
   $scope.events = Event.query();
 }
 
-function EventCtrl($scope, $routeParams, Event) {
+function PaymentCtrl($rootScope, $scope, $routeParams, Event) {
+  //TODO research how to implement it in proper way
+  $rootScope.eventId = $routeParams.eventId;
+
   var currentDate = new Date();
   var _defaultPayment = {
     participants: [],
@@ -20,7 +23,6 @@ function EventCtrl($scope, $routeParams, Event) {
     total: null,
     date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0, 0)
   };
-
 
   $scope.event = Event.get({eventId: $routeParams.eventId});
 
@@ -71,5 +73,10 @@ function EventCtrl($scope, $routeParams, Event) {
       $scope.newPayment.total = '';
     }
   });
+}
 
+function EventCtrl($rootScope, $scope, $routeParams, Event, User) {
+  $rootScope.eventId = $routeParams.eventId;
+  $scope.event = Event.get({eventId: $routeParams.eventId});
+  $scope.me = User.me();
 }
