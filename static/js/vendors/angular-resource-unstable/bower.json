@@ -1,0 +1,17 @@
+{
+  "name": "angular-resource-unstable",
+  "version": "1.1.5",
+  "main": "./angular-resource.js",
+  "dependencies": {
+    "angular-unstable": "1.1.5"
+  },
+  "gitHead": "e62a7d2dcd1cfe3bb83884d2b59a5fb9c2b72bbc",
+  "readme": "# AngularJS Resource (unstable)\n\nBower package for the unstable branch of AngularJS Resource. Current Version `1.1.5`.\n\n```sh\n$ bower install angular-resource-unstable\n```",
+  "readmeFilename": "README.md",
+  "_id": "angular-resource-unstable@1.1.5",
+  "description": "Bower package for the unstable branch of AngularJS Resource. Current Version `1.1.5`.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/johannestroeger/bower-angular-resource-unstable.git"
+  }
+}
