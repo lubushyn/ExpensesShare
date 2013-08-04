@@ -69,13 +69,13 @@ def jsonify(dbObject):
     return json.dumps(json_presentation, default=json_util.default)
 
 # TODO fix it somebody - we have to problems
-# 1. I cannot jsonify 1 object, only array @see user()
-# 2. user id and participant id is not consistant (as me - I explain)
+# 1. user id and participant id is not consistant (as me - I explain)
 @app.route('/user/me') 
 @login_required
 def user():
     # array wrap - it is hack for jsonify, shoud be rewrited
-    return jsonify([g.user])
+    return json.dumps(g.user,default=json_util.default)
+    
 
 @app.route('/user')
 @login_required
@@ -150,13 +150,6 @@ def login():
         return factory.facebookStrategy.login()
     if type == "twitter":
         return factory.twitterStrategy.login()
-
-@app.route('/profile')
-@login_required
-def profile():
-    user_id = session.get('user_id')
-    profile = db.users.find_one({"_id": ObjectId(user_id)})
-    return json.dumps(profile,default=json_util.default)
 
 
 @app.route('/oauth-authorized-twitter')

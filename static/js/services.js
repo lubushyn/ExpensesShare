@@ -35,12 +35,9 @@ angular.module('expenseShareServices', ['ngResource'])
         method: 'GET',
         cache: true,
         params: {},
-        //we get first array item due to backend limitations. Will be fixed in future
         transformResponse: $http.defaults.transformResponse.concat([
           function (data) {
-            data = data[0];
             data.id = data._id.$oid;
-
             return data;
           }
         ])
