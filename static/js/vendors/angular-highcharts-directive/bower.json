@@ -1,0 +1,9 @@
+{
+  "name": "angular-highcharts-directive",
+  "version": "0.0.0",
+  "commit": "7bd17f294b405245f5434de58eabbe2d4c7c5454",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rootux/angular-highcharts-directive.git"
+  }
+}

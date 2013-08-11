@@ -49,7 +49,6 @@ function PaymentCtrl($rootScope, $scope, $routeParams, Event) {
     }
 
     console.log($scope.newPayment);
-    return;
 
     //TODO replace alerts
     Event.patch({eventId: $routeParams.eventId},
