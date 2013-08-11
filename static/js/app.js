@@ -5,15 +5,17 @@
  */
 
 'use strict';
-/* global EventsCtrl:true, EventCtrl:true, PaymentCtrl:true */
+/* global EventsCtrl:true, EventCtrl:true, PaymentCtrl:true, ReportsCtrl:true, ReportCtrl */
 /* App Module */
 
-angular.module('expenseShare', ['expenseShareServices', 'expenseShareDirectives'])
+angular.module('expenseShare', ['expenseShareServices', 'expenseShareDirectives', 'chartsExample.directives'])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
       when('/events', {templateUrl: '../static/js/partials/events.html', controller: EventsCtrl}).
       when('/payment/add/:eventId', {templateUrl: '../static/js/partials/add-payment.html', controller: PaymentCtrl}).
       when('/event/:eventId', {templateUrl: '../static/js/partials/event.html', controller: EventCtrl}).
+      when('/reports', {templateUrl: '../static/js/partials/reports.html', controller: ReportsCtrl}).
+      when('/report/:eventId', {templateUrl: '../static/js/partials/report.html', controller: ReportCtrl}).
       when('/upchk', {templateUrl: '../static/js/partials/upchk.html'}).
       otherwise({redirectTo: '/events'});
   }])

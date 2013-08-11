@@ -9,18 +9,18 @@
 /* Services */
 angular.module('expenseShareServices', ['ngResource'])
   .factory('Event', function ($resource, $rootScope) {
-    var Event =  $resource($rootScope.config.basePath + 'event/:eventId', {}, {
+    var Event = $resource($rootScope.config.basePath + 'event/:eventId', {}, {
       query: {method: 'GET', cache: true, params: {}, isArray: true},
-      get: {method: 'GET', cache: false, params: {eventId:''}, isArray: false},
-      patch: {method: 'PATCH', params: {eventId:''}}
+      get: {method: 'GET', cache: false, params: {eventId: ''}, isArray: false},
+      patch: {method: 'PATCH', params: {eventId: ''}}
     });
 
-    Event.prototype.getParticipantById = function (id){
+    Event.prototype.getParticipantById = function (id) {
       //TODO rewrite into map
-      for (var index in this.participants){
-        if (this.participants.hasOwnProperty(index)){
+      for (var index in this.participants) {
+        if (this.participants.hasOwnProperty(index)) {
           var participant = this.participants[index];
-          if (participant.id === id){
+          if (participant.id === id) {
             return participant;
           }
         }
@@ -42,6 +42,11 @@ angular.module('expenseShareServices', ['ngResource'])
           }
         ])
       }
+    });
+  })
+  .factory('Report', function ($resource, $rootScope) {
+    return $resource($rootScope.config.basePath + 'report/:eventId', {}, {
+      get: {method: 'GET', cache: false, params: {eventId: ''}, isArray: true}
     });
   });
 

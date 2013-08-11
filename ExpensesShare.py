@@ -164,6 +164,17 @@ def oauth_authorized_facebook(resp):
     return factory.facebookStrategy.authorized(resp)
 
 
+@app.route('/report/<event_id>')
+@login_required
+def get_report(event_id):
+    report = db.events.aggregate([
+        {"$unwind": "$payments"},
+        {"$group": {"_id": "$payments.date", "total": {"$sum": "$payments.total"}}},
+        {"$sort": { "_id": 1 } }
+    ])
+
+    return json.dumps(report['result'], default=json_util.default)
+
 @app.route('/<path:fullpath>')
 def static_router(fullpath):
     if not fullpath.endswith('.py'):

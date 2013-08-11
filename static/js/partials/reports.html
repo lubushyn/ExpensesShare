@@ -1,0 +1,11 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12">
+      <ul class="nav nav-tabs nav-stacked">
+        <li ng-repeat="event in events">
+          <a href="#/report/{{ event._id.$oid }}">{{ event.name }} (participants: {{ event.participants.length }})</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

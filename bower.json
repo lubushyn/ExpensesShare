@@ -6,6 +6,8 @@
     "jquery": "~1.9.1",
     "angular-unstable": "1.1.5",
     "angular-resource-unstable":"1.1.5",
-    "kb-bootstrap-datepicker":"*"
+    "kb-bootstrap-datepicker":"*",
+    "highcharts":"*",
+    "angular-highcharts-directive":"*"
   }
 }
