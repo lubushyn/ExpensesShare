@@ -31,7 +31,7 @@ angular.module('expenseShareDirectives', [])
             element.datepicker('setValue', ngModel.$viewValue || '');
           };
           element.datepicker(optionsObj).on('changeDate', function(ev){
-            var dateTxt = ev.date.valueOf();
+            var dateTxt = ev.date;
             updateModel(dateTxt);
             if (scope.select) {
               scope.$apply(function () {
