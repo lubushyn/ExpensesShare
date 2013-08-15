@@ -110,8 +110,10 @@ def get_event(event_id, limit, offset):
         return "Event not found", 404
     result = dict(event)
     
-    if limit is None:
+    if limit is None and offset is None:
         result["payments"] = result["payments"]
+    elif limit is not None:
+        result["payments"] = result["payments"][-int(limit):]
     else:
         result["payments"] = result["payments"][int(offset):int(limit)]
     
