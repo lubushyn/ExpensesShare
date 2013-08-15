@@ -12,7 +12,8 @@ angular.module('expenseShareServices', ['ngResource'])
     var Event = $resource($rootScope.config.basePath + 'event/:eventId', {}, {
       query: {method: 'GET', cache: true, params: {}, isArray: true},
       get: {method: 'GET', cache: false, params: {eventId: ''}, isArray: false},
-      patch: {method: 'PATCH', params: {eventId: ''}}
+      patch: {method: 'PATCH', params: {eventId: ''}},
+      addParticipant: {method: 'PATCH', params: {eventId: ''}, url:$rootScope.config.basePath + 'event/:eventId/user'}
     });
 
     Event.prototype.getParticipantById = function (id) {
@@ -30,8 +31,9 @@ angular.module('expenseShareServices', ['ngResource'])
     return Event;
   })
   .factory('User', function ($resource, $rootScope, $http) {
-    return  $resource($rootScope.config.basePath + 'user/me', {}, {
+    return  $resource($rootScope.config.basePath + 'user/', {}, {
       me: {
+        url: $rootScope.config.basePath + 'user/me',
         method: 'GET',
         cache: true,
         params: {},
@@ -41,6 +43,11 @@ angular.module('expenseShareServices', ['ngResource'])
             return data;
           }
         ])
+      },
+      add: {
+        method: 'POST',
+        params:{},
+        isArray:false
       }
     });
   })

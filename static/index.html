@@ -47,8 +47,9 @@
           <li><a href="#/upchk">Link</a></li>
         </ul>
         <ul class="nav pull-right">
+          <li><a ng-show="location.isEvent" ng-href="#/event/{{ eventId }}/addUser">Add participant</a></li>
           <li><a ng-show="location.isEvent" ng-href="#/payment/add/{{ eventId }}">Add payment</a></li>
-          <li><a ng-show="location.isAddPayment" ng-href="#/event/{{ eventId }}">Back-to-event</a></li>
+          <li><a ng-show="location.isUpdateEvent" ng-href="#/event/{{ eventId }}">Back-to-event</a></li>
         </ul>
 
         <!--<form class="navbar-form pull-left">-->

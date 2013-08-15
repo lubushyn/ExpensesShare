@@ -3,13 +3,49 @@
  * Date: 7/7/13
  * Time: 8:30 PM
  */
-/* exported EventsCtrl, PaymentCtrl, EventCtrl, ReportsCtrl, ReportCtrl */
+/* exported EventsCtrl, PaymentCtrl, EventCtrl, ReportsCtrl, ReportCtrl, UserCtrl */
 
 'use strict';
 
 /* Controllers */
 function EventsCtrl($scope, Event) {
   $scope.events = Event.query();
+}
+
+function UserCtrl($rootScope, $scope, $routeParams, User, Event) {
+  //TODO research how to implement it in proper way - lol, use controller, Luke!
+  $rootScope.eventId = $routeParams.eventId;
+
+  $scope.newUser = {};
+
+  $scope.addUser = function () {
+    if (!$scope.newUser.name) {
+      alert('User must have name. Sorry about that');
+      return;
+    }
+
+    User.add({},
+      $scope.newUser,
+      function (data) {
+        var newId = data.$oid;
+        //flush all
+        console.log('New id: ' + newId);
+
+        Event.addParticipant(
+          {eventId: $routeParams.eventId},
+          {"id": newId},
+          function () {
+            $scope.newUser = {};
+            alert('User added! Nothing special');
+          },
+          function (data) {
+            alert('Error occurred: ' + data.status);
+          });
+
+      }, function (data) {
+        alert('Error occurred: ' + data.status);
+      });
+  };
 }
 
 function PaymentCtrl($rootScope, $scope, $routeParams, Event) {

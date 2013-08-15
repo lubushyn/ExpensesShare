@@ -5,7 +5,7 @@
  */
 
 'use strict';
-/* global EventsCtrl:true, EventCtrl:true, PaymentCtrl:true, ReportsCtrl:true, ReportCtrl */
+/* global EventsCtrl:true, EventCtrl:true, PaymentCtrl:true, ReportsCtrl:true, ReportCtrl, UserCtrl:true */
 /* App Module */
 
 angular.module('expenseShare', ['expenseShareServices', 'expenseShareDirectives', 'chartsExample.directives'])
@@ -13,6 +13,7 @@ angular.module('expenseShare', ['expenseShareServices', 'expenseShareDirectives'
     $routeProvider.
       when('/events', {templateUrl: '../static/js/partials/events.html', controller: EventsCtrl}).
       when('/payment/add/:eventId', {templateUrl: '../static/js/partials/add-payment.html', controller: PaymentCtrl}).
+      when('/event/:eventId/addUser', {templateUrl: '../static/js/partials/add-user.html', controller: UserCtrl}).
       when('/event/:eventId', {templateUrl: '../static/js/partials/event.html', controller: EventCtrl}).
       when('/reports', {templateUrl: '../static/js/partials/reports.html', controller: ReportsCtrl}).
       when('/report/:eventId', {templateUrl: '../static/js/partials/report.html', controller: ReportCtrl}).
@@ -28,15 +29,16 @@ angular.module('expenseShare', ['expenseShareServices', 'expenseShareDirectives'
       'dateFormatAngular': 'dd-MM-yyyy'
     };
 
+    //TODO hellfire, use controller or I kill you
     $rootScope.location = $location;
     $rootScope.$on('$locationChangeSuccess', function() {
       $location.isEvent = false;
-      $location.isAddPayment = false;
+      $location.isUpdateEvent = false;
 
-      if (!!$location.path().match(/^\/event\//)){
+      if (!!$location.path().match(/^\/payment\/add\//) || !!$location.path().match(/^\/event\/\w+\/addUser/)) {
+        $location.isUpdateEvent = true;
+      } else if (!!$location.path().match(/^\/event\//)){
         $location.isEvent = true;
-      } else if (!!$location.path().match(/^\/payment\/add\//)) {
-        $location.isAddPayment = true;
       }
     });
 

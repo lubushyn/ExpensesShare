@@ -83,6 +83,13 @@ def users():
     users = db.users.find()
     return jsonify(users)
 
+@app.route('/user', methods=['POST'])
+# @login_required
+def create_user():
+    new_user = json.loads(request.data)
+    res = db.users.insert({"name":new_user["name"]})
+    return json.dumps(res,default=json_util.default), 200
+
 
 @app.route('/event')
 # @login_required
@@ -127,6 +134,18 @@ def create_payment(event_id):
                      {"$push": {"payments": payment}})
 
     return "Created", 200
+
+
+@app.route('/event/<event_id>/user', methods=['PATCH'])
+# @login_required
+def add_user(event_id):
+    event = db.events.find_one({"_id": ObjectId(event_id)})
+    if event is None:
+        return "Event not found", 404
+    new_user = json.loads(request.data)
+    db.events.update({"_id": ObjectId(event_id)},
+                     {"$push": {"participants": new_user["id"]}})
+    return "Done", 200
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
