@@ -3,7 +3,7 @@
  * Date: 7/7/13
  * Time: 8:30 PM
  */
-/* exported EventsCtrl, PaymentCtrl, EventCtrl, ReportsCtrl, ReportCtrl, UserCtrl */
+/* exported EventsCtrl, PaymentAddCtrl, EventCtrl, ReportsCtrl, ReportCtrl, UserCtrl, PaymentListCtrl */
 
 'use strict';
 
@@ -48,7 +48,13 @@ function UserCtrl($rootScope, $scope, $routeParams, User, Event) {
   };
 }
 
-function PaymentCtrl($rootScope, $scope, $routeParams, Event) {
+function PaymentListCtrl($rootScope, $scope, $routeParams, Event) {
+  //TODO research how to implement it in proper way - lol, use controller, Luke!
+  $rootScope.eventId = $routeParams.eventId;
+  $scope.event = Event.get({eventId: $routeParams.eventId});
+}
+
+function PaymentAddCtrl($rootScope, $scope, $routeParams, Event) {
   //TODO research how to implement it in proper way - lol, use controller, Luke!
   $rootScope.eventId = $routeParams.eventId;
 
@@ -111,10 +117,13 @@ function PaymentCtrl($rootScope, $scope, $routeParams, Event) {
   });
 }
 
-function EventCtrl($rootScope, $scope, $routeParams, Event, User) {
+function EventCtrl($rootScope, $scope, $routeParams, Event, User, $location) {
   $rootScope.eventId = $routeParams.eventId;
-  $scope.event = Event.get({eventId: $routeParams.eventId});
+  $scope.event = Event.get({eventId: $routeParams.eventId, limit: 15});
 //  $scope.me = User.me();
+  $scope.allPayments = function () {
+    $location.path('/payment/list/' + $routeParams.eventId);
+  };
 }
 
 function ReportsCtrl($scope, Event) {

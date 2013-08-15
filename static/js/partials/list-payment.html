@@ -1,0 +1,47 @@
+<div class="container-fluid ng-cloak">
+    <div class="span12">
+        <div class="well sidebar-nav">
+            <div class="accordion" id="participants-list">
+                <div class="nav-header">Payments</div>
+                <div class="accordion-group {{ me.id!=payment.payer  && 'highlighted' || '' }}"
+                     ng-repeat="payment in event.payments| orderBy:'date':true">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#participants-list"
+                           href="#{{ $index }}" stop-click>
+                            [{{ event.getParticipantById(payment.payer).name }}]:
+                            <span class="text-success">{{ payment.date|date:config.dateFormatAngular }}</span>
+                            <span class="badge badge-success">{{ payment.total }}$</span>
+
+                            <i class="icon-user" ng-hide="payment.participants.length > 7"
+                               ng-repeat="participant in payment.participants"></i>
+                            <span ng-show="payment.participants.length > 7">
+                              <i class="icon-user"></i>x{{ payment.participants.length }}
+                            </span>
+                            <strong>{{ payment.name && '[' + payment.name + ']' || '' }}</strong>
+                        </a>
+                    </div>
+                    <div id="{{ $index }}" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <table class="table table-hover table-bordered">
+                                <tbody>
+                                <tr class="info">
+                                    <td>Payer</td>
+                                    <td>{{ event.getParticipantById(payment.payer).name }}</td>
+                                </tr>
+                                <tr class="warning" ng-repeat="transaction in payment.calculation">
+                                    <td><i class="icon-user"></i> {{ transaction.share }}$</td>
+                                    <td>{{ event.getParticipantById(transaction.participant).name }}</td>
+                                </tr>
+                                <tr class="success">
+                                    <td>Total</td>
+                                    <td>{{ payment.total }}$</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

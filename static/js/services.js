@@ -11,7 +11,8 @@ angular.module('expenseShareServices', ['ngResource'])
   .factory('Event', function ($resource, $rootScope) {
     var Event = $resource($rootScope.config.basePath + 'event/:eventId', {}, {
       query: {method: 'GET', cache: true, params: {}, isArray: true},
-      get: {method: 'GET', cache: false, params: {eventId: ''}, isArray: false},
+      get: {method: 'GET', cache: false, params: {eventId: '', limit: ''}, isArray: false,
+        url:$rootScope.config.basePath + 'event/:eventId/:limit'},
       patch: {method: 'PATCH', params: {eventId: ''}},
       addParticipant: {method: 'PATCH', params: {eventId: ''}, url:$rootScope.config.basePath + 'event/:eventId/user'}
     });

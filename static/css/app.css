@@ -22,7 +22,7 @@ body {
     margin: 0 10px;
 }
 
-#participants-list a:hover {
+#participants-list a:hover, #reports a:hover {
 	text-decoration:none;
 }
 

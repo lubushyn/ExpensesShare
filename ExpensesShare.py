@@ -100,13 +100,21 @@ def events():
     return jsonify(events)
 
 
-@app.route('/event/<event_id>')
+@app.route('/event/<event_id>', defaults={'limit':  None, 'offset': None})
+@app.route('/event/<event_id>/<limit>', defaults={'offset': 0})
+@app.route('/event/<event_id>/<limit>/<offset>')
 # @login_required
-def get_event(event_id):
+def get_event(event_id, limit, offset):
     event = db.events.find_one({"_id": ObjectId(event_id)})
     if event is None:
         return "Event not found", 404
     result = dict(event)
+    
+    if limit is None:
+        result["payments"] = result["payments"]
+    else:
+        result["payments"] = result["payments"][int(offset):int(limit)]
+    
     participants = map(ObjectId, result['participants'])
     people = db.users.find({"_id": {"$in": participants}})
     result['participants'] = [dict(id=str(user['_id']), name=user['name'])
