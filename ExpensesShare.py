@@ -71,21 +71,21 @@ def jsonify(dbObject):
 # TODO fix it somebody - we have to problems
 # 1. user id and participant id is not consistant (as me - I explain)
 @app.route('/user/me') 
-@login_required
+# @login_required
 def user():
     # array wrap - it is hack for jsonify, shoud be rewrited
     return json.dumps(g.user,default=json_util.default)
     
 
 @app.route('/user')
-@login_required
+# @login_required
 def users():
     users = db.users.find()
     return jsonify(users)
 
 
 @app.route('/event')
-@login_required
+# @login_required
 def events():
     events = db.events.find()
     if events is None:
@@ -94,7 +94,7 @@ def events():
 
 
 @app.route('/event/<event_id>')
-@login_required
+# @login_required
 def get_event(event_id):
     event = db.events.find_one({"_id": ObjectId(event_id)})
     if event is None:
@@ -111,7 +111,7 @@ def get_event(event_id):
 
 
 @app.route('/event/<event_id>', methods=['PATCH'])
-@login_required
+# @login_required
 def create_payment(event_id):
     event = db.events.find_one({"_id": ObjectId(event_id)})
     if event is None:
@@ -133,14 +133,15 @@ def unauthorized_handler():
     return redirect('/')
 
 @app.route('/app')
-@login_required
+# @login_required
 def root():
     return app.send_static_file('index.html')
 
 
 @app.route('/')
 def main():
-    return app.send_static_file('main.html')
+    return redirect('/app')
+    # return app.send_static_file('main.html')
 
 
 @app.route('/login')
@@ -165,7 +166,7 @@ def oauth_authorized_facebook(resp):
 
 
 @app.route('/report/<event_id>')
-@login_required
+# @login_required
 def get_report(event_id):
     report = db.events.aggregate([
         {"$unwind": "$payments"},

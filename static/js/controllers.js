@@ -78,7 +78,7 @@ function PaymentCtrl($rootScope, $scope, $routeParams, Event) {
 function EventCtrl($rootScope, $scope, $routeParams, Event, User) {
   $rootScope.eventId = $routeParams.eventId;
   $scope.event = Event.get({eventId: $routeParams.eventId});
-  $scope.me = User.me();
+//  $scope.me = User.me();
 }
 
 function ReportsCtrl($scope, Event) {
