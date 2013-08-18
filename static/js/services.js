@@ -54,7 +54,14 @@ angular.module('expenseShareServices', ['ngResource'])
   })
   .factory('Report', function ($resource, $rootScope) {
     return $resource($rootScope.config.basePath + 'report/:eventId', {}, {
-      get: {method: 'GET', cache: false, params: {eventId: ''}, isArray: true}
+      get: {method: 'GET', cache: true, params: {eventId: ''}, isArray: true},
+      getByParticipantId: {
+        method: 'GET',
+        cache: true,
+        params: {eventId: '', participantId: ''},
+        url: $rootScope.config.basePath + 'report/:eventId/:participantId',
+        isArray: true
+      }
     });
   });
 

@@ -131,58 +131,98 @@ function ReportsCtrl($scope, Event) {
 }
 
 function ReportCtrl($scope, $routeParams, Event, Report) {
-  var dEvent = new $.Deferred(),
-    dReport = new $.Deferred();
+  var dEvent = new $.Deferred();
+
+  $scope.reports = [];
   $scope.event = Event.get({eventId: $routeParams.eventId}, function () {
     dEvent.resolve();
   });
-  $scope.report = Report.get({eventId: $routeParams.eventId}, function () {
-    dReport.resolve();
-  });
 
-  $.when.apply(null, [dEvent, dReport]).then(function () {
-    var _data = [];
-    $scope.report.forEach(function(item){
-      _data.push([item._id, item.total]);
-    });
-    console.log(_data);
-
-    $scope.basicAreaChart = {
-      "title": {
-        "text": $scope.event.name
-      },
-      "subtitle": {
-        "text": "Participants: " +
-          $scope.event.participants.map(function (data) {
-            return data.name;
-          }).reduce(function (result, data) {
-            return result += data + ", ";
-          })
-      },
-
-      "tooltip": {},
-      "plotOptions": {
-        "area": {
-          "pointStart": 0,
-          "marker": {
-            "enabled": false,
-            "symbol": "circle",
-            "radius": 2,
-            "states": {
-              "hover": {
-                "enabled": true
-              }
+  $scope.defaultChart = {
+    "title": {
+      "text": "Dummy title"
+    },
+    "subtitle": {
+      "text": "Dummy subtitle"
+    },
+    "tooltip": {},
+    "plotOptions": {
+      "area": {
+        "pointStart": 0,
+        "marker": {
+          "enabled": false,
+          "symbol": "circle",
+          "radius": 2,
+          "states": {
+            "hover": {
+              "enabled": true
             }
           }
         }
-      },
-      "series": [
+      }
+    },
+    xAxis: {
+      type: 'category'
+    },
+    "series": [
+      {
+        "name": "Dummy series",
+        "data": []
+      }
+    ]
+  };
+
+  dEvent.done(function () {
+    //general report
+    Report.get({eventId: $routeParams.eventId}, function (data) {
+      var _data = [],
+        total = 0;
+      data.forEach(function (item) {
+        //TODO gavnocode.ru (facepalm)
+        _data.push([item._id.match(/[-\d]+/)[0], item.total]);
+        total += item.total;
+      });
+//      console.log(_data);
+
+      $scope.basicAreaChart = $.extend({}, $scope.defaultChart, {});
+      $scope.basicAreaChart.title.text = $scope.event.name + ' ['+total+'$]';
+      $scope.basicAreaChart.subtitle.text = "Participants: " +
+        $scope.event.participants.map(function (data) {
+          return data.name;
+        }).reduce(function (result, data) {
+            return result += data + ", ";
+          });
+      $scope.basicAreaChart.series = [
         {
           "name": "Expenses",
           "data": _data
         }
-      ]
-    };
-  }, 1000);
+      ];
+    });
 
+    //report per participant
+    $scope.event.participants.forEach(function (participant) {
+      Report.getByParticipantId({eventId: $routeParams.eventId, participantId: participant.id}, function (data) {
+        console.log(data);
+        var _data = [],
+          total = 0;
+        data.forEach(function (item) {
+          //TODO gavnocode.ru (facepalm)
+          _data.push([item._id.match(/[-\d]+/)[0], item.total]);
+          total += item.total;
+        });
+        var newChart = $.extend({}, $scope.defaultChart, {});
+        newChart.title.text = $scope.event.name + ' ['+total.toFixed(2)+'$]';
+        newChart.subtitle.text = "Participant: " + participant.name;
+        newChart.series = [
+          {
+            "name": "Expenses",
+            "data": _data
+          }
+        ];
+        $scope.reports.push(newChart);
+      });
+    });
+
+  });
 }

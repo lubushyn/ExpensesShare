@@ -198,9 +198,28 @@ def oauth_authorized_facebook(resp):
 # @login_required
 def get_report(event_id):
     report = db.events.aggregate([
+        {"$match":{"_id":ObjectId(event_id)}},
         {"$unwind": "$payments"},
         {"$group": {"_id": "$payments.date", "total": {"$sum": "$payments.total"}}},
         {"$sort": { "_id": 1 } }
+    ])
+
+    return json.dumps(report['result'], default=json_util.default)
+
+@app.route('/report/<event_id>/<participant_id>')
+# @login_required
+def get_report_by_participant(event_id, participant_id):
+    # TODO lol, mongodb INJECTION HERE
+    report = db.events.aggregate([
+        {"$match":{"_id":ObjectId(event_id)}},
+        {"$project":{"payments":1}}, 
+        {"$unwind": "$payments"}, 
+        {"$match":{'payments.participants': participant_id}},
+        {"$project":{'payments.date':1,'payments.calculation':1}}, 
+        {"$unwind":'$payments.calculation'},
+        {"$match":{'payments.calculation.participant': participant_id}},
+        {"$group":{"_id": "$payments.date", "total": {"$sum": "$payments.calculation.share"}}},
+        {"$sort":{"_id":1}}
     ])
 
     return json.dumps(report['result'], default=json_util.default)
